@@ -34,7 +34,7 @@ always @(posedge clk)   begin
 
         else begin
             
-            led <= led;  // 保持LED状态不变
+            led <= led; 
             timer_cnt <= timer_cnt + 'd1; 
         end
     end

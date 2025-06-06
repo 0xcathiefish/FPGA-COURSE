@@ -15,16 +15,3 @@ set_property IOSTANDARD  LVCMOS33 [get_ports led]
 # rst port setting
 set_property PACKAGE_PIN M15 [get_ports rst]
 set_property IOSTANDARD LVCMOS33 [get_ports rst]
-
-
-
-
-
-
-
-
-
-
-
-
-

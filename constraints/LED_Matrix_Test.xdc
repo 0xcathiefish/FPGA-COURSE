@@ -1,13 +1,21 @@
-# Version 1.1
+# Version 1.0
+
+# Warning can be ignored :
+
+# Synthesis         ignore - warning 1 : [Synth 8-7080] Parallel synthesis criteria is not met
+
+# Implementation    ignore - warning 2 : [Device 21-9320] Failed to find the Oracle tile group with name 'HSR_BOUNDARY_TOP'. This is required for Clock regions and Virtual grid.
+#                   ignore - warning 3 : [Device 21-2174] Failed to initialize Virtual grid.
+#                   ignore - warning 4 : [DRC ZPS7-1] PS7 block required: The PS7 cell must be used in this Zynq design in order to enable correct default configuration.
+
+
+# XDC - LED_Matrix_Test 
 
 # Clock set
 
 create_clock -period 20.000 -name sys_standard_clk -waveform {0.000 10.000} [get_ports clk]
 set_property PACKAGE_PIN U18 [get_ports clk]
 set_property IOSTANDARD LVCMOS33 [get_ports clk]
-
-
-# XDC - LED_Matrix
 
 # package pin set
 
@@ -59,7 +67,6 @@ set_property IOSTANDARD LVCMOS33 [get_ports clk]
 # 35	L15	    36	L14
 # 37	GND	    38	GND
 # 39	+3.3V	40	+3.3V
-
 
 
 
@@ -125,14 +132,41 @@ set_property PULLTYPE PULLUP [get_ports {w_column_cell[*][*]}]
 
 
 
+# KEY
+
+# KEY_1 M15
+# KEY_2 M14
+# KEY_3 L17
+# KEY_4 L16
+
+
 # rst_n port setting， for user KEY 1
 
 set_property PACKAGE_PIN M15 [get_ports rst_n]
 set_property IOSTANDARD LVCMOS33 [get_ports rst_n]
+set_property PULLTYPE PULLDOWN [get_ports rst_n]
+
+# Key wire
+
+set_property PACKAGE_PIN M14 [get_ports w_key_2]
+set_property PACKAGE_PIN L17 [get_ports w_key_3]
+set_property PACKAGE_PIN L16 [get_ports w_key_4]
+
+set_property IOSTANDARD LVCMOS33 [get_ports w_key_2]
+set_property IOSTANDARD LVCMOS33 [get_ports w_key_3]
+set_property IOSTANDARD LVCMOS33 [get_ports w_key_4]
 
 
+# start wire
+
+set_property PACKAGE_PIN M18 [get_ports start]
+set_property IOSTANDARD LVCMOS33 [get_ports start]
+set_property PULLTYPE PULLDOWN [get_ports start]
 
 
+# done wire
 
-
+set_property PACKAGE_PIN J19 [get_ports w_done]
+set_property IOSTANDARD LVCMOS33 [get_ports w_done]
+set_property PULLTYPE PULLDOWN [get_ports w_done]
 

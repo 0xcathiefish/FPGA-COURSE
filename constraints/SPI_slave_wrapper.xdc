@@ -2,9 +2,32 @@
 
 # Clock set
 
-create_clock -period 20.000 -name sys_standard_clk -waveform {0.000 10.000} [get_ports clk]
-set_property PACKAGE_PIN U18 [get_ports clk]
-set_property IOSTANDARD LVCMOS33 [get_ports clk]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets spi_clk_IBUF]
+
+# sys clk
+
+create_clock -period 20.000 -name sys_clk -waveform {0.000 10.000} [get_ports sys_clk]
+set_property PACKAGE_PIN U18 [get_ports sys_clk]
+set_property IOSTANDARD LVCMOS33 [get_ports sys_clk]
+
+
+# Set to 1M Hz
+create_clock -period 1000.000 -name spi_clk [get_ports spi_clk]
+
+
+# SPI clock delay logic
+
+set_input_delay -clock spi_clk -max 10.000 [get_ports w_spi_mosi]
+set_input_delay -clock spi_clk -min 2.000  [get_ports w_spi_mosi]
+
+set_input_delay -clock spi_clk -max 5.000  [get_ports w_spi_ss_n0]
+set_input_delay -clock spi_clk -min 1.000  [get_ports w_spi_ss_n0]
+
+
+
+set_clock_groups -asynchronous -group [get_clocks spi_clk] -group [get_clocks sys_clk]
+
+
 
 
 # XDC - LED_Matrix
@@ -134,5 +157,36 @@ set_property IOSTANDARD LVCMOS33 [get_ports rst_n]
 
 
 
+# SPI xdc
+
+set_property PACKAGE_PIN C20 [get_ports w_spi_ss_n0 ]
+set_property PACKAGE_PIN G20 [get_ports w_spi_mosi  ]
+set_property PACKAGE_PIN M20 [get_ports w_spi_miso  ]
+set_property PACKAGE_PIN D19 [get_ports spi_clk     ]
+
+set_property IOSTANDARD LVCMOS33 [get_ports w_spi_ss_n0 ]
+set_property IOSTANDARD LVCMOS33 [get_ports w_spi_mosi  ]
+set_property IOSTANDARD LVCMOS33 [get_ports w_spi_miso  ]
+set_property IOSTANDARD LVCMOS33 [get_ports spi_clk     ]
+
+set_property PULLTYPE PULLUP    [get_ports w_spi_ss_n0]
+set_property PULLTYPE PULLDOWN  [get_ports w_spi_mosi]
+set_property PULLTYPE PULLDOWN  [get_ports w_spi_miso]
+set_property PULLTYPE PULLDOWN  [get_ports spi_clk]
 
 
+
+# w_tx_done
+
+# Use J21 3
+
+set_property PACKAGE_PIN M18 [get_ports w_tx_done]
+set_property IOSTANDARD LVCMOS33 [get_ports w_tx_done  ]
+set_property PULLTYPE PULLDOWN [get_ports w_tx_done]
+
+
+# Test LED
+
+set_property PACKAGE_PIN A20 [get_ports w_test_led]
+set_property IOSTANDARD LVCMOS33 [get_ports w_test_led]
+set_property PULLTYPE PULLDOWN [get_ports w_test_led]
